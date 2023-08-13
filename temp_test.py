@@ -1,5 +1,3 @@
-import numpy
-
 def make_check(answers, asw):
     share = len(answers) // len(asw)
     remain = len(answers) % len(asw)
@@ -31,7 +29,3 @@ def solution(answers):
     answer = list(x+1 for x in filter(lambda x: win[x] == winner, range(len(win))))
     print(answer)
     return answer
-
-answers = [1,2,3,4,5,1,2,3,4,5,6,8,9,4,5,6,5]
-asw = [1,2,3,4,5]
-solution(answers)
