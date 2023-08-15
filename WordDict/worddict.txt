@@ -12,5 +12,5 @@
   word   | result
  "AAAAE" |   6
  "AAAE"  |   10
-  "I"	 |  1563
+  "I"	   |  1563
  "EIO"	 |  1189
