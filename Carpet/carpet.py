@@ -2,7 +2,7 @@ def solution(brown, yellow):
     divisor = []
     answer = [0,0]
     
-    for i in range(1, yellow+1):
+    for i in range(1, yellow+1): #yellow 약수
         if yellow % i == 0:
             divisor.append(i)
             
