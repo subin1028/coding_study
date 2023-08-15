@@ -1,16 +1,16 @@
 def solution(brown, yellow):
     total = brown + yellow
     divisor = []
-    answer = []
+    answer = [0,0]
+    
     for i in range(1, total+1):
         if total % i == 0:
             divisor.append(i)
-    length = len(divisor)
             
-    if length % 2 == 0:
-        answer = [divisor[length//2], divisor[length//2 - 1]]
-        
-    else:
-        answer = [divisor[length//2]] * 2
+    for i in divisor:
+        if ((i+2) * 2 + (yellow // i) * 2 == brown):
+            answer[0] = i + 2
+            answer[1] = yellow // i + 2
+            break
         
     return answer
