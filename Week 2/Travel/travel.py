@@ -23,7 +23,7 @@ def dfs(graph, current, len_tickets, visited, path):
             visited[current][next_city] = True
             if dfs(graph, next_city, len_tickets, visited, path):
                 return True
-            visited[current][next_city] = False #백트래킹을 위해 제자리
+            visited[current][next_city] = False #백트래킹
     
     path.pop()
     return False
