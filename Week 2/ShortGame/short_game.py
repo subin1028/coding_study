@@ -13,7 +13,6 @@ def solution(maps):
     return answer
 
 def bfs(graph, x, y, dx, dy, n, m):
-    count = []
     route = [[0,0]]
     queue = deque()
     queue.append((x, y)) 
@@ -26,20 +25,17 @@ def bfs(graph, x, y, dx, dy, n, m):
             ny = y + dy[i]
             
             if 0 <= nx < n and 0 <= ny < n:
-                if graph[nx][ny] == 1:
-                
-                    if (graph[nx][ny] == 1):
-                        route.append([nx, ny])
-                        graph[nx][ny] += graph[x][y]
-                        graph[x][y] = -1
-                        queue.append((nx, ny))
+
+                if (graph[nx][ny] == 1):
+                    route.append([nx, ny])
+                    graph[nx][ny] = graph[x][y] + 1
+                    graph[x][y] = -1
+                    queue.append((nx, ny))
                         
                 if (nx == (n-1)) and (ny == (m-1)):
                     print(graph)
                     return max(map(max, graph))
-                        
-                else:
-                    continue
+   
     if graph[n-1][m-1] == 1: 
         return -1
     return max(map(max, graph))
