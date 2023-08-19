@@ -7,15 +7,16 @@ def solution(maps):
     dx = [-1, 1, 0, 0]
     dy = [0, 0, -1, 1] #위, 아래, 왼, 오
     
-    print(bfs(maps, 0,0, dx, dy, n, m))
+    answer = bfs(maps, 0,0, dx, dy, n, m)
+    print(answer)
     
     return answer
 
 def bfs(graph, x, y, dx, dy, n, m):
-    count = 0
+    count = []
     route = [[0,0]]
     queue = deque()
-    queue.append((x, y))
+    queue.append((x, y)) 
     
     while queue:
         x, y = queue.popleft()
@@ -24,26 +25,24 @@ def bfs(graph, x, y, dx, dy, n, m):
             nx = x + dx[i]
             ny = y + dy[i]
             
-            if ([nx, ny] != route[count-1]):
-                if nx < 0 or nx >= n or ny < 0 or ny >= m:
+            if 0 <= nx < n and 0 <= ny < n:
+                if graph[nx][ny] == 1:
+                
+                    if (graph[nx][ny] == 1):
+                        route.append([nx, ny])
+                        graph[nx][ny] += graph[x][y]
+                        graph[x][y] = -1
+                        queue.append((nx, ny))
+                        
+                if (nx == (n-1)) and (ny == (m-1)):
+                    print(graph)
+                    return max(map(max, graph))
+                        
+                else:
                     continue
-                
-                if graph[nx][ny] == 0:
-                    continue
-                
-                if (graph[nx][ny] == 1):
-                    route.append([nx, ny])
-                    count += 1
-                    queue.append((nx, ny))
-                    break
-                    
-            else:
-                continue
-                
-    return count, route
-    
-
-maps = [[1,0,1,1,1],[1,0,1,0,1],[1,0,1,1,1],[1,1,1,0,1],[0,0,0,0,1]]
-
+    if graph[n-1][m-1] == 1: 
+        return -1
+    return max(map(max, graph))
+ 
+maps = [[1,0,1,1,1],[1,0,1,0,1],[1,0,1,1,1],[1,1,1,0,0],[0,0,0,0,1]]
 solution(maps)
-# 한가지의 루트밖에 찾아내지 못함
