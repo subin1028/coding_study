@@ -47,9 +47,9 @@ def solution(tickets):
     
     answer = [list(ticket_dict.keys())[list(ticket_dict.values()).index(city)] for city in path]
     
-    
+    print(answer)
     return answer
 
 
-tickets = [["ICN", "B"], ["B", "ICN"], ["ICN", "A"], ["A", "D"], ["D", "A"]]
+tickets = [["ICN", "AAA"], ["ICN", "AAA"], ["ICN", "AAA"], ["AAA", "ICN"], ["AAA", "ICN"]]	
 solution(tickets)

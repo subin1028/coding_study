@@ -16,19 +16,20 @@ def solution(maps):
     check[0][0] = 1
     
     while queue:
-       y,x = queue.popleft()
+       x, y = queue.popleft()
        
        for i in range(4):
             nx = x + dx[i]
             ny = y + dy[i]
             
-            if 0 <= ny < n and 0 <= nx < m and (maps[ny][nx] == 1):
+            if 0 <= nx < n and 0 <= ny < m and (maps[nx][ny] == 1):
 
-                if check[ny][nx] == -1:
-                    check[ny][nx] = check[y][x] + 1
-                    queue.append([ny, nx])
+                if check[nx][ny] == -1:
+                    check[nx][ny] = check[x][y] + 1
+                    queue.append([nx, ny])
    
+    print(check)
     return check[-1][-1]
  
-maps = [[1,0,1,1,1],[1,0,1,0,1],[1,0,1,1,1],[1,1,1,0,1],[0,0,0,0,1]]
+maps = [[1,0,1,1,1],[1,0,1,0,1],[1,0,1,1,1],[1,1,1,0,0],[0,0,0,0,1]]
 solution(maps)
