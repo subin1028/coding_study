@@ -1,10 +1,10 @@
-import copy
 def solution(n, lost, reserve):
-    answer = 0
-    have = n - len(lost)
-    lost.sort()
-    reserve.sort()
+    for r in reserve[:]:
+        if r in lost:
+            lost.remove(r)
+            reserve.remove(r)
     
+    have = n - len(lost)
     
     for i in lost:
         if i in reserve:
@@ -25,8 +25,8 @@ def solution(n, lost, reserve):
     print(have)
     return have
 
-n = 5
-lost = [2, 4]
-reserve = [1,3,5]
+n = 1
+lost = [2]
+reserve = [2]
 
 solution(n, lost, reserve)
