@@ -7,6 +7,10 @@ def solution(n, lost, reserve):
     
     
     for i in lost:
+        if i in reserve:
+            reserve.remove(i)
+            continue
+        
         if i+1 in reserve:
             have += 1
             reserve.remove(i+1)
@@ -16,6 +20,7 @@ def solution(n, lost, reserve):
             have += 1
             reserve.remove(i-1)
             continue
+
             
     print(have)
     return have
