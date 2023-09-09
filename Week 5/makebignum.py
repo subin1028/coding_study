@@ -1,40 +1,25 @@
 def solution(number, k):
-    #if len([max(number):])가 len(number) - k보다 크면
+    answer = ''
+    temp = []
     number = list(map(int, number))
-    sort = list(set(number))
-    sort.sort(reverse=True)
-    idxs = [[] for i in range(len(sort))]
-    start = k-1
-    print(sort)
-    answer = []
-
-    for i in range(0, len(sort)):
-        idx = [j for j, x in enumerate(number) if x == sort[i]]
-        for m in range(0, len(idx)):
-            idxs[i].append(idx[m]) 
-    print(idxs)
     
-    while(len(answer) < len(number) - k):
-        for i in range(0, len(idxs)):
-            for j in idxs[i]:
-                if len(answer) > 0:
-                    if j < start and j >= answer[-1][1]:
-                        answer.append([i, j])
-                        idxs[i].remove(j)
-                        start += 1
-                        print(answer)
-                        break
+    for i in number:
+        if len(temp) == 0:
+            temp.append(i)
+            continue
+            
+        if k > 0:
+            while temp[-1] < i:
+                temp.pop()
+                k -= 1
                 
-                else:
-                    if j < start:
-                        answer.append([i, j])
-                        idxs[i].remove(j)
-                        start += 1
-                        print(answer)
-                        break
-                  
-                        
-    print("answer : ", answer)
+                if len(temp) == 0 or k <= 0:
+                    break       
+        temp.append(i)
+    
+    for j in temp:
+        answer += str(j)
+
     return answer
     
 number = "4177252841"
