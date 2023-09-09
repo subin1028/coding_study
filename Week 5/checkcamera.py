@@ -1,21 +1,14 @@
 def solution(routes):
-    answer = 1
-    routes.sort()
-    no = []
+    answer = 0
+    routes.sort(key = lambda x: x[1])
+    start = -30001    
+    print(routes)
     
-    
-    for i in range(0, len(routes)-1):
-        a, b = routes[1]
-        for j in range(i+1, len(routes)):
-            if routes[j][0] < b:
-                a = max(a, routes[j][0])
-                
-                
-            if routes[j][1] > a:
-                b = min(b, routes[j][1])
-                
-            print(a,b)
-                
+    for i in routes:
+        if i[0] > start:
+            answer += 1
+            start = i[1]
+    print(answer)
     return answer
 
 routes = [[-20,-15], [-14,-5], [-18,-13], [-5,-3]]
