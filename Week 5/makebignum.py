@@ -17,10 +17,9 @@ def solution(number, k):
                     break       
         temp.append(i)
     
-    for j in temp[-(len(number) - k):]:
+    for j in temp[:len(number) - k]:
         answer += str(j)
-        
-    print(answer)
+
     return answer
     
 number = "4177252841"
