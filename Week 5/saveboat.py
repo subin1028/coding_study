@@ -1,25 +1,20 @@
 def solution(people, limit):
     answer = 0
-    people.sort(reverse = True)
+    people.sort()
     
-    while len(people) > 0:
-        min = people.pop()
-        if not people:
-                answer += 1
-                break
-            
-        for i in range(len(people), -1, -1):
-            if(min + people[-1] <= limit):
-                people.pop()
-                answer += 1
-            
-        else:
+    min = 0
+    max = len(people) - 1
+    print(people)
+    while min < max:
+        print(people[min] + people[max])
+        if people[min] + people[max] <= limit:
             answer += 1
-            
-    print(answer)
-    return answer
+            min += 1
+        max -= 1
 
-people = [20, 20, 40, 50, 30, 60]
+    return len(people) - answer
+
+people = [70, 50, 80, 50]
 limit = 100
 
 solution(people, limit)
