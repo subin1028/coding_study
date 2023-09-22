@@ -1,15 +1,13 @@
 def solution(clothes):
-    answer = 0
-    sum = 0
-    num = 0
+    answer = 1
     cloth = {}
     count = []
+
     for i,j in clothes:
-        num += 1
         if j not in cloth:
-            cloth[j] = [num]   
+            cloth[j] = [i]   
         else:
-            cloth[j].append(num)
+            cloth[j].append(i)
             
     for k in cloth.keys():
         count.append(len(cloth[k]))
@@ -17,7 +15,7 @@ def solution(clothes):
     for h in count:
         answer *= (h+1)
     
-    return answer
+    return answer-1
 
 clothes = [["yellow_hat", "headgear"], ["blue_sunglasses", "eyewear"], ["green_turban", "headgear"]]
 solution(clothes)
