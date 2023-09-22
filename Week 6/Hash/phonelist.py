@@ -4,16 +4,15 @@ def solution(phone_book):
     start = []
     
     if len(phone_book) == 1:
-        return answer
+        return True
     
     for i in range(0, len(phone_book)-1):
         for j in range(i+1, len(phone_book)):
-            start = phone_book[j]
-            orin = phone_book[i]
-            if len(orin) <= len(start):
-                if orin == start[:len(orin)]:
-                    return False
-    
+            temp = phone_book[j].replace(phone_book[i], "a")
+            if temp[0] == "a":
+                print("false")
+                return False
+    print("true") 
     return answer
 
 phone_book = ["12", "123", "1235", "567", "88"]
