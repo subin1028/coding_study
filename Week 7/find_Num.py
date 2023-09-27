@@ -1,34 +1,29 @@
+from bisect import bisect_left, bisect_right
 n1 = int(input())
 a = list(map(int, input().split(" ")))
 n2 = int(input())
 b = list(map(int, input().split(" ")))
-answer = []
+answer = [0 * i for i in range(n2)]
+b_copy = []
 
 a.sort()
-b.sort()
 
-for i in b:
-    st = (n1-1) // 2
-    while(1):
-        if a[st] == i:
-            answer.append(1)
-            break
-            
-        elif a[st] > i:
-            try:
-                st = st // 2
-            except:
-                answer.append(0)
-                break
-        
-        elif a[st] < i:
-            try:
-                st = (st + (n1-1)) // 2
-            except:
-                answer.append(0)
-                break
-    
-print(answer)
+for i, j in enumerate(b):
+    b_copy.append([j, i])
+
+b_copy.sort()
+
+for num, idx in b_copy:
+    if bisect_left(a, num) > len(a)-1:
+        continue
+    else:
+        if num == a[bisect_left(a, num)]:
+            answer[idx] = 1
+        else:
+            continue
+
+for j in answer:
+    print(j)
 
 # 5
 # 4 1 5 2 3

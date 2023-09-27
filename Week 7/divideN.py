@@ -1,16 +1,13 @@
-import numpy as np
 def solution(n, left, right):
-    square = [[0 for i in range(n)] for i in range(n)]
     answer = []
-    for i in range(0,n):
-        for j in range(0, i+1):
-            square[j][i] = i+1
-            square[i][j] = i+1
-    
-    print(square)
-    # square = np.array(square)
-    # square = square.reshape(-1,).tolist()
-    # answer = square[left:right+1]
-    
-    
+    for i in range(left, right+1):
+        mok = i // n
+        na = i % n
+        answer.append(max(mok, na)+1)
+        
     return answer
+
+n = 3
+left = 2
+right = 5
+solution(n, left, right)
