@@ -16,11 +16,11 @@ def solution(users, emoticons):
                 if user[0] <= comb[k]:
                     pay += emoticons[k] // 100 * (100-comb[k]) 
                     
-                if pay >= user[1]:
-                    count += 1
-                else:
-                    temp_pay += pay
-                    
+            if pay >= user[1]:
+                count += 1
+            else:
+                temp_pay += pay
+                
         answer.append([count, temp_pay])
     answer = sorted(answer, key=lambda x: (x[0], x[1]))
     print(answer[-1])
