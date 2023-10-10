@@ -8,7 +8,6 @@ def solution(users, emoticons):
 
     for comb in com_dis:
         count = 0
-        pay = 0
         temp_pay = 0
         for user in users:
             pay = 0
