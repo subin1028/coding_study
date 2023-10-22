@@ -1,67 +1,57 @@
-N,M=map(int,input().split())
-graph=[]
-bx, by, rx, ry = 0,0,0,0
+N, M = map(int, input().split()) #맵 크기 받기
+board = [list(input().rstrip()) for _ in range(N)]  #맵 받기
+dx = [-1, 1, 0, 0]  # 움직임
+dy = [0, 0, -1, 1] 
+queue = []
+#방문지 확인
+visited = [[[[False] * M for _ in range(N)] for _ in range(M)] for _ in range(N)]
 
-dx=[0,0,1,-1]
-dy=[1,-1,0,0]
+def pos_init():
+    rx, ry, bx, by = 0, 0, 0, 0 #위치 변수
+    for i in range(N):
+        for j in range(M):
+            if board[i][j] == 'R': #빨간 구슬 위치 찾기
+                rx, ry = i, j
+            elif board[i][j] == 'B': #파란 구슬 위치 찾기
+                bx, by = i, j
+    queue.append((rx, ry, bx, by, 1)) #현재 위치와 움직임 횟수 넣어주기
+    #제일 처음에 쓸 함수라 1 들어감
+    visited[rx][ry][bx][by] = True
 
-for i in range(N):
-    data=list(input().rstrip()) #맵 한줄씩 받기
-    graph.append(data) #그래프에 넣기
+def move(x, y, dx, dy):
+    cnt = 0  # 이동 수 변수
+    # 다음이 벽이거나 현재가 구멍일 때까지
+    while board[x+dx][y+dy] != '#' and board[x][y] != 'O':
+        x += dx
+        y += dy
+        cnt += 1
+    return x, y, cnt
 
-    for j in range(M): 
-        if data[j]=='B': #파란색 공 위치 저장
-            bx, by=i, j
-        if data[j]=='R': #빨간색 공 위치 저장
-            rx, ry=i, j
+def solution():
+    pos_init()  # 초기화
+    while queue:  #BFS
+        rx, ry, bx, by, depth = queue.pop(0)
+        if depth > 10:  # 이동 횟수가 10을 초과하면
+            break # 끝내기
+        for i in range(4):  #상하좌우
+            nrx, nry, rcnt = move(rx, ry, dx[i], dy[i])  #빨간공 움직이기
+            nbx, nby, bcnt = move(bx, by, dx[i], dy[i])  #파란공 움직이기
+            if board[nbx][nby] != 'O':  #파란 공이 구멍과 만나지 않고
+                if board[nrx][nry] == 'O':  #빨간공이 구멍과 만났으면
+                    print(depth) #답 출력
+                    return
+                if nrx == nbx and nry == nby:  #두 공이 같은 위치라면
+                    if rcnt > bcnt:  # 이동거리가 많은 것을
+                        nrx -= dx[i]  # 한 칸 뒤로
+                        nry -= dy[i]
+                    else:
+                        nbx -= dx[i]
+                        nby -= dy[i]
+                # 방문한 곳인지 확인
+                if not visited[nrx][nry][nbx][nby]:
+                    visited[nrx][nry][nbx][nby] = True
+                    # 다음 depth 탐색 위한 queue
+                    queue.append((nrx, nry, nbx, nby, depth+1))
+    print(-1)  # 실패 시
 
-def move_ball(x,y,d):
-    cnt=0
-    while graph[x+dx[d]][y+dy[d]]!='#' and graph[x][y]!='O': #구멍이나 맵 끝이 아니면
-        x+=dx[d] #이동
-        y+=dy[d]
-        cnt+=1
-
-    return x,y,cnt
-
-answer=11
-
-def dfs(bx,by,rx,ry,time):
-    global answer
-    if time>10:
-        return # 10번 이상 움직였으면 멈추기
-
-    b_cnt=0 #이동횟수 들어갈 변수
-    r_cnt=0
-    
-    #상하좌우 이동
-    for d in range(4):
-        nbx,nby,b_cnt=move_ball(bx,by,d)
-        nrx,nry,r_cnt=move_ball(rx,ry,d)
-
-        #파란색이 들어가면 실패
-        if graph[nbx][nby]=='O':
-            return
-        #빨간색이 홀에 들어가면 게임 끝
-        if graph[nrx][nry]=='O':
-            answer=min(answer,time)
-            return
-
-        # 빨간색과 파란색이 서로 겹칠 경우
-        if nbx==nrx and nby==nry:
-            if b_cnt>r_cnt:
-                nbx-=dx[d]
-                nby-=dy[d]
-            elif b_cnt<r_cnt:
-                nrx-=dx[d]
-                nry-=dy[d]
-
-        dfs(nbx,nby,nrx,nry,time+1)
-
-time=1
-dfs(bx,by,rx,ry,time)
-
-if answer==11:
-    print(-1)
-else:
-    print(answer)
+solution()
