@@ -7,27 +7,7 @@ time = int(input())
 times = [] #돌리는 톱니, 방향
 for _ in range(time):
     times.append(list(map(int, (input().split(" ")))))
-    
-info = [] #12시 방향, 오, 왼 톱니
-    
-for i in wheel:
-    info.append([i[0], i[2], i[6]])
-    
-for num, direct in times:
-    a = wheel[num-1][6]     
-    
-def move(num, num1, dir):
-    #num: 돌아가는 톱니, num1: 영향받는 톱니
-    if num > num1:
-        if info[num-1][2] == info[num1-1][1]:
-            circle(num1, dir)
-            info[num-1] = [wheel[num-1][0], wheel[num-1][2], wheel[num-1][6]]
-                
-    if num1 > num: 
-        if info[num1-1][2] == info[num-1][1]:
-            circle(num1, dir)
-            
-        
+  
 def circle(num, dir):
     if dir == 1:
         for i in range(0, 8):
@@ -38,8 +18,35 @@ def circle(num, dir):
         for i in range(0, 7):
             wheel[num-1][i] = wheel[num-1][i+1]
         wheel[num-1][-1] = temp
+  
+def left(num, dir):
+    if num < 1:
+        return
+    if wheel[num][2] != wheel[num+1][6]:
+        left(num-1, -dir)
+        circle(num, dir)
         
+def right(num, dir):
+    if num > 3:
+        return
+    if wheel[num][6] != wheel[num-1][2]:
+        right(num+1, -dir)
+        circle(num, dir)
     
+for num, direct in times:
+    left(num-1, -direct)
+    right(num+1, -direct)   
+    circle(num, dir)
+    
+score = 0
+if wheel[0][0] == '1':
+    score += 1
+for i in range(1, 4):
+    if wheel[i][0] == '1':
+        score += i * 2
+
+print(score)
+
 # 10101111
 # 01111101
 # 11001110
@@ -47,12 +54,6 @@ def circle(num, dir):
 # 2
 # 3 -1
 # 1 1
-
-# 6번째
-
-
-print(wheel)
-print(times)
 
 # [['1', '0', '1', '0', '1', '1', '1', '1']]
 # [[3, -1], [1, 1]]
