@@ -1,5 +1,5 @@
 from collections import deque
-import numpy as np
+# import numpy as np
 M, N, H = list(map(int, input().split())) #M은 가로칸, N은 세로칸, H는 쌓아올려지는 수
 
 box = [[] for _ in range(H)]
@@ -26,30 +26,40 @@ for i in range(H):
                 visited[i][j][k] = True
 
 def bfs():
-    global count
     while(queue):
         h, n, m = queue.popleft()
         
         for i in range(6):
-            nx = x[i] + m
+            nx = x[i] + h
             ny = y[i] + n 
-            nz = z[i] + h 
+            nz = z[i] + m
             
-            if nx < 0 or nx >= M or ny < 0 or ny >= N or nz < 0 or nz >= H:
+            if nx < 0 or nx >= H or ny < 0 or ny >= N or nz < 0 or nz >= M:
                 continue
             
-            if box[nz][ny][nx] == 0 and visited[nz][ny][nx] == False:
-                queue.append([nz, ny, nx])
-                box[nz][ny][nx] = box[h][n][m] + 1
-                visited[nz][ny][nx] = True
+            if box[nx][ny][nz] == 0 and visited[nx][ny][nz] == False:
+                queue.append([nx, ny, nz])
+                box[nx][ny][nz] = box[h][n][m] + 1
+                visited[nx][ny][nz] = True
                 
 bfs()
 
-np3 = np.array(box)
-if 0 in np3:
-    print(-1)
-else:
-    max_value = np.max(np3)
-    print(max_value-1)
+# np3 = np.array(box)
+# if 0 in np3:
+#     print(-1)
+# else:
+#     max_value = np.max(np3)
+#     print(max_value-1)
+
+for i in box:
+    for j in i:
+        for k in j:
+            if k == 0:
+                print(-1)
+                exit()
+                
+        count = max(count, max(j))
+                
+print(count - 1)
                 
 
