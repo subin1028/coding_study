@@ -1,27 +1,18 @@
-from collections import deque
+import heapq
 N = int(input())
 lecture = [list(map(int, input().split())) for _ in range(N)]
-time = [False for _ in range(N)]
-cs = 0
-#[[1, 3], [2, 4], [3, 5]]
+
 lecture.sort()
-q = deque(lecture)
-while q:
-    _, t1 = q.popleft()
-    for i in range(len(q)):
-        t2, t3 = q.popleft()
-    
-        if t1 <= t2:
-            cs += 1
-            if len(q) == 1:
-                cs += 1
-                break
-            continue
+meeting = []
+heapq.heappush(meeting, lecture[0][1])
+
+for i in range(1, N):
+    if meeting[0] > lecture[i][0]: #수업 이어서x
+        heapq.heappush(meeting, lecture[i][1])
         
-        else:
-            q.append([t2, t3])
-            print(len(q))
-            if len(q) == 1:
-                cs += 1
-                break
-print(cs)
+    else:
+        heapq.heappop(meeting)
+        heapq.heappush(meeting, lecture[i][1])
+
+print(meeting)        
+print(len(meeting))
