@@ -1,8 +1,6 @@
 def func2(arr, N):
-    for i in arr:
-        arr2 = arr.copy()
-        arr2.remove(i)
-        if 100-i in arr2:
+    for i in range(N):
+        if 100-arr[i] in arr[:i-1]:
             return 1
         
     return 0
