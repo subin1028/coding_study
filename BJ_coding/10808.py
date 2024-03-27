@@ -1,12 +1,7 @@
-import sys
-alpha = {}
-word = list(sys.stdin.readline().strip())
-for i in range(97, 123):
-    alpha[chr(i)] = 0
+alpha = [0]*26
+word = list(input())
 
 for s in word:
-    alpha[s] += 1
+    alpha[ord(s)-97] += 1
 
-answer = list(alpha.values())
-
-print(*answer)
+print(*alpha)
